@@ -34,8 +34,6 @@ With revenge!
                |_|\_\\__,_||_|   \___/  \__|/___|
 ```
 
-![Karotzator](https://raw.githubusercontent.com/oneearedrabbit/karotz/master/images/karotzator.png)
-
 Software root
 ===
 
@@ -53,19 +51,20 @@ if [ -x /mnt/usbkey/autorun -a -f /mnt/usbkey/autorun.sig ] ; then
 fi
 ```
 
-Note that `gpg --verify` accepts either signature or signed message,
-however it works quite differently for these cases.
+Note that `gpg --verify` accepts either a signature or a signed
+message, however it works quite differently for these cases.
 
 i.e.
 
-`gpg --verify <signature>` checks both signature and file, which is
+`gpg --verify <signature>` checks both a signature and a file, which is
 supposed to work on Karotz by default.
 
 However, `gpg --verify` also accepts a signed message, and it acts
-quite differently. Basically it verifies that signed message is signed
-and signed right.
+quite differently. Basicallym it verifies that signed message is
+signed and signed right.
 
-So if we pass to gpg a signed message from http://update.karotz.com/eabi/rootfs_version:
+So if we pass to `gpg` a signed message from karotz.com webiste, e.g.
+http://update.karotz.com/eabi/rootfs_version:
 ```
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
@@ -96,12 +95,14 @@ Primary key fingerprint: C2A2 8CEE 04C3 4712 F371  6E58 3577 0BBB 5817
 D794
 ```
 
-with exit code 0, which is a successful result, hence we can bypass the validation.
+and exit with code 0. Which is a successful result, hence we can
+bypass the validation.
 
-Here's a step-by-step instructions how to get root on Karotz:
-  1. Get a signature at http://update.karotz.com/eabi/rootfs_version
-  2. Upload the signature to a usb-flash as autorun.sig file.
-  3. Create an executable file "autorun" with shebang #!/bin/bash and
+Simply put, here's a step-by-step guide how to get root on Karotz:
+  1. Get a signed signature from
+     http://update.karotz.com/eabi/rootfs_version
+  2. Save the signature to a usb-flash as autorun.sig file.
+  3. Create an executable file "autorun" with shebang `#!/bin/bash` and
      copy it to the usb-drive.
   4. Insert the usb-flash to Karotz's port and reboot it.
   5. ...
@@ -110,8 +111,6 @@ Here's a step-by-step instructions how to get root on Karotz:
 As an example you can enable telnet daemon with the following autorun file:
 ```
 #!/bin/bash
-
-LED=/karotz/bin/led
 
 if [ -f /etc/passwd.bak ]
 then
@@ -188,11 +187,11 @@ Config parameters
 [15] : Exit
 ```
 
-Enter 14 and add console=ttySAC0,115200 init=/bin/sh as user boot
+Enter 14 and add `console=ttySAC0,115200 init=/bin/sh` as user boot
 parameter. Now you can back to the previous menu by entering 15 and
 then press 2 to run Karotz.
 
-After this you can add extra user with empty password:
+After this you can add an extra user with a blank password:
 ```
 echo 'karotz::0:0:karotz:/usr/karotz:/bin/bash' >> '/etc/passwd'
 ```
@@ -205,3 +204,4 @@ and start telnet daemon:
 
 That's it.
 
+![Karotzator](https://raw.githubusercontent.com/oneearedrabbit/karotz/master/images/karotzator.png)
