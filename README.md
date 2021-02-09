@@ -133,3 +133,75 @@ Hardware root
 Unscrew the Karotz and find four pins at the right top corner --
 serial connection.
 
+![JTAG]<https://raw.githubusercontent.com/oneearedrabbit/karotz/master/images/jtag.jpg>
+
+Connect GND to GND, RX to TX, TX to RX and switch the Rabbit on.
+
+```
+************************************************************* 
+*                                                           *
+* Rabbit V3 - ( BIOS v1.16 )                                *
+*                                                           *
+*                                                           *
+* PRAGMATEC/Point Core                                      *
+ ************************************************************
+FCLK=405MHz, HCLK=135MHz, PCLK=67MHz, CPU is running at 405MHz
+
+Press ENTER to stop the autoboot
+........................................Read chip id = adda
+Nand flash status = e0
+Set boot params = initrd=0x31800000,0x00500000 ...
+Load Kernel...
+Load Ramdisk...
+Uncompressing Linux..............................
+.................................................
+.................................................
+....................... done, booting the kernel.
+Press Enter
+
+Please select function : 
+0 : Uart download file
+1 : Write Nand flash with download file
+2 : Load Pragram from Nand flash and run
+3 : Erase Nand flash regions
+4 : Test NAND flash
+5 : Restore default partitions
+6 : Set boot params
+Now we can change boot parameters to get root console. Press 6.
+
+Config parameters
+[0] : bootpara is 0x00000001 (1)
+[1] : cpuclk is 0x00000002 (2)
+[2] : AUTORUN is 0x00000000 (0)
+[3] : serial is 0x00000000 (0)
+[4] : baudrate is 0x0001c200 (115200)
+[5] : machine is 0x00000778 (1912)
+[6] : runAddr is 0x30200000 (807403520)
+[7] : rootfs is 0x00000000 (0)
+[8] : tty is 0x00000004 (4)
+[9] : initrdA is 0x31800000 (830472192)
+[10] : initrdL is 0x00500000 (5242880)
+[11] : memsize is 0x04000000 (67108864)
+[12] : devfs is 0x00000000 (0)
+[13] : ostore is 0x00000000 (0)
+[14] : userpara is 0x00000000 (0)
+[15] : Exit
+```
+
+Enter 14 and add console=ttySAC0,115200 init=/bin/sh as user boot
+parameter. Now you can back to the previous menu by entering 15 and
+then press 2 to run Karotz.
+
+After this you can add extra user with empty password:
+```
+echo 'karotz::0:0:karotz:/usr/karotz:/bin/bash' >> '/etc/passwd'
+```
+
+and start telnet daemon:
+
+```
+/etc/init.d/telnet start
+```
+
+That's it.
+
