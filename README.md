@@ -133,7 +133,7 @@ Hardware root
 Unscrew the Karotz and find four pins at the right top corner --
 serial connection.
 
-![JTAG]<https://raw.githubusercontent.com/oneearedrabbit/karotz/master/images/jtag.jpg>
+![JTAG](https://raw.githubusercontent.com/oneearedrabbit/karotz/master/images/jtag.jpg)
 
 Connect GND to GND, RX to TX, TX to RX and switch the Rabbit on.
 
